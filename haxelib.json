@@ -1,0 +1,11 @@
+{
+	"name": "Ansix",
+	"license": "MIT",
+	"classPath": "src",
+	"url": "https://github.com/0xA3/Ansix",
+	"tags": ["cross", "cli", "xa3"],
+	"description": "ANSI Text formater for the Terminal",
+	"version": "0.1.0",
+	"releasenote": "Initial release",
+	"contributors": ["0xA3"]
+}
