@@ -87,8 +87,8 @@ class Ansix {
 				final index = width * y + x;
 				final cell = grid[y][x];
 				sv[index] =
-					( cell.color == color || cell.color == Transparent ? "" : getColorFormat( cell.color )) +
-					( cell.background == background || cell.background == Transparent ? "" : getBackgroundFormat( cell.background )) +
+					( cell.color == color ? "" : getColorFormat( cell.color )) +
+					( cell.background == background ? "" : getBackgroundFormat( cell.background )) +
 					cell.char;
 				
 				// if( cell.color != color ) trace( '$x:$y change color to ${cell.color}' );
@@ -149,4 +149,18 @@ class Ansix {
 		}
 	}
 
+	public static function cellToString( cell:Cell ) {
+		return 'char: "${cell.char}", color: ${colorToString( cell.color )}, background: ${colorToString( cell.background )}';
+	}
+
+	public static function colorToString( c:Color ) {
+		return switch c {
+			case Transparent:		'Transparent';
+			case Default: 			'Default';
+			case RGB( r, g, b ): 	'RGB(${r},${g},${b})';
+			default: 				'${getColor( c )}';
+
+		}
+	}
 }
+
