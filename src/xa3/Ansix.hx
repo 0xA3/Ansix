@@ -30,10 +30,11 @@ enum Color {
 	BrightCyan;
 	BrightWhite;
 	RGB( r:Int, g:Int, b:Int );
+	Transparent;
 }
 
 typedef Cell = {
-	var s:String;
+	var char:String;
 	var color:Color;
 	var background:Color;
 }
@@ -60,6 +61,7 @@ class Ansix {
 
 	static function getColorFormat( c:Color ) {
 		return switch c {
+			case Transparent:		'';
 			case Default: 			'\u001b[39m';
 			case RGB( r, g, b ): 	'\u001b[38;2;${r};${g};${b}m';
 			default: 				'\u001b[${getColor( c )}m';
@@ -68,6 +70,7 @@ class Ansix {
 
 	static function getBackgroundFormat( c:Color ) {
 		return switch c {
+			case Transparent:		'';
 			case Default: 			'\u001b[49m';
 			case RGB( r, g, b ): 	'\u001b[48;2;${r};${g};${b}m';
 			default:				'\u001b[${getBackground( c )}m';
@@ -84,14 +87,14 @@ class Ansix {
 				final index = width * y + x;
 				final cell = grid[y][x];
 				sv[index] =
-					( cell.color 		== color 		? "" : getColorFormat( cell.color )) +
-					( cell.background 	== background 	? "" : getBackgroundFormat( cell.background )) +
-					cell.s;
+					( cell.color == color || cell.color == Transparent ? "" : getColorFormat( cell.color )) +
+					( cell.background == background || cell.background == Transparent ? "" : getBackgroundFormat( cell.background )) +
+					cell.char;
 				
 				// if( cell.color != color ) trace( '$x:$y change color to ${cell.color}' );
 				// if( cell.background != background ) trace( '$x:$y change background to ${cell.background}' );
-				color = cell.color;
-				background = cell.background;
+				if( cell.color != color ) color = cell.color;
+				if( cell.background != background ) background = cell.background;
 				if( x == row.length - 1 )sv[index] += "\n";
 			}
 		}
@@ -100,6 +103,7 @@ class Ansix {
 
 	static function getColor( c:Color ) {
 		return switch c {
+			case Transparent: throw "Error: in getColor: Transparent should be handeled in getColorFormat()";
 			case Default: throw "Error: in getColor: Default should be handeled in getColorFormat()";
 			case Black: 30;
 			case Red: 31;
@@ -123,6 +127,7 @@ class Ansix {
 
 	static function getBackground( c:Color ) {
 		return switch c {
+			case Transparent: throw "Error: in getColor: Transparent should be handeled in getBackgroundFormat()";
 			case Default: throw "Error: in getBackground: Default should be handeled in getBackgroundFormat()";
 			case Black: 40;
 			case Red: 41;
