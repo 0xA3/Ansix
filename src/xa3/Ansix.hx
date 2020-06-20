@@ -34,7 +34,7 @@ enum Color {
 }
 
 typedef Cell = {
-	var char:String;
+	var code:Int;
 	var color:Color;
 	var background:Color;
 }
@@ -89,7 +89,7 @@ class Ansix {
 				sv[index] =
 					( cell.color == color ? "" : getColorFormat( cell.color )) +
 					( cell.background == background ? "" : getBackgroundFormat( cell.background )) +
-					cell.char;
+					String.fromCharCode( cell.code );
 				
 				// if( cell.color != color ) trace( '$x:$y change color to ${cell.color}' );
 				// if( cell.background != background ) trace( '$x:$y change background to ${cell.background}' );
@@ -150,7 +150,7 @@ class Ansix {
 	}
 
 	public static function cellToString( cell:Cell ) {
-		return 'char: "${cell.char}", color: ${colorToString( cell.color )}, background: ${colorToString( cell.background )}';
+		return 'char: "${String.fromCharCode( cell.code )}", color: ${colorToString( cell.color )}, background: ${colorToString( cell.background )}';
 	}
 
 	public static function colorToString( c:Color ) {
