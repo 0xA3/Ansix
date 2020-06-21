@@ -41,10 +41,29 @@ typedef Cell = {
 
 class Ansix {
 	
+	/**
+	 * Clear Console content
+	 * @return return '\u001b[2J'
+	 */
 	public static function clear() return '\u001b[2J';
+	
+	/**
+	 * Reset Console text format
+	 * @return return '\u001b[0m'
+	 */
 	public static function resetFormat() return '\u001b[0m';
+	
+	/**
+	 * Move cursor to top left
+	 * @return return '\u001b[1
+	 */
 	public static function resetCursor() return '\u001b[1;1H';
 
+	/**
+	 * format string with parameters
+	 * @param s String
+	 * @param parameters Array of type Parameter
+	 */
 	public static function format( s:String, parameters:Array<Parameter> ) {
 		
 		final sequences = parameters.map( parameter -> {
@@ -77,6 +96,11 @@ class Ansix {
 		}
 	}
 
+	/**
+	 * Return ANSI format string for Cells in a 2d Array in row-major order
+	 * @param grid:Array<Array<Cell>>
+	 * @param width:Int
+	 */
 	public static function renderGrid2d( grid:Array<Array<Cell>>, width:Int ) {
 		var color = Default;
 		var background = Default;
@@ -101,6 +125,11 @@ class Ansix {
 		return sv.join( "" );
 	}
 
+	/**
+	 * Return ANSI format string for Cells in a 1d Array in row-major order
+	 * @param grid:Array<Cell>
+	 * @param width:Int
+	 */
 	public static function renderGrid( grid:Array<Cell>, width:Int ) {
 		var color = Default;
 		var background = Default;
@@ -166,10 +195,18 @@ class Ansix {
 		}
 	}
 
+	/**
+	 * returns cell data as string
+	 * @param cell:Cell
+	 */
 	public static function cellToString( cell:Cell ) {
 		return 'char: "${String.fromCharCode( cell.code )}", color: ${colorToString( cell.color )}, background: ${colorToString( cell.background )}';
 	}
 
+	/**
+	 * returns color data as string
+	 * @param c:Color
+	 */
 	public static function colorToString( c:Color ) {
 		return switch c {
 			case Transparent:		'Transparent';
