@@ -140,11 +140,22 @@ class Ansix {
 				( cell.color == color ? "" : getColorFormat( cell.color )) +
 				( cell.background == background ? "" : getBackgroundFormat( cell.background )) +
 				String.fromCharCode( cell.code );
-			if( cell.color != color ) color = cell.color;
-			if( cell.background != background ) background = cell.background;
+			if( compareColors( cell.color, color )) color = cell.color;
+			if( compareColors( cell.background, background )) background = cell.background;
 			if( i % width == width - 1 ) sv[i] += "\n";
 		}
 		return sv.join( "" );
+	}
+
+	public static function compareColors( c1:Color, c2:Color ) {
+		switch c1 {
+			case RGB( r1, g1, b1 ):
+				switch c2 {
+					case RGB( r2, g2, b2 ): return r1 == r2 && g1 == g2 && b1 == b2;
+					default: return false;
+				}
+			default: return c1 == c2;
+		}
 	}
 
 	static function getColor( c:Color ) {
