@@ -95,8 +95,25 @@ class Ansix {
 				// if( cell.background != background ) trace( '$x:$y change background to ${cell.background}' );
 				if( cell.color != color ) color = cell.color;
 				if( cell.background != background ) background = cell.background;
-				if( x == row.length - 1 )sv[index] += "\n";
+				if( x == row.length - 1 ) sv[index] += "\n";
 			}
+		}
+		return sv.join( "" );
+	}
+
+	public static function renderGrid( grid:Array<Cell>, width:Int ) {
+		var color = Default;
+		var background = Default;
+		final sv = new Vector<String>( grid.length );
+		for( i in 0...grid.length ) {
+			final cell = grid[i];
+			sv[i] =
+				( cell.color == color ? "" : getColorFormat( cell.color )) +
+				( cell.background == background ? "" : getBackgroundFormat( cell.background )) +
+				String.fromCharCode( cell.code );
+			if( cell.color != color ) color = cell.color;
+			if( cell.background != background ) background = cell.background;
+			if( i % width == width - 1 ) sv[i] += "\n";
 		}
 		return sv.join( "" );
 	}
