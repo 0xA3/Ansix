@@ -2,6 +2,7 @@ package asciix;
 
 import haxe.ds.Vector;
 import haxe.io.BytesInput;
+import asciix.Color;
 
 enum Parameter {
 	Clear;
@@ -9,34 +10,6 @@ enum Parameter {
 	ResetFormat;
 	Color( c:Color );
 	Background( c:Color );
-}
-
-enum Color {
-	Default;
-	Black;
-	Red;
-	Green;
-	Yellow;
-	Blue;
-	Magenta;
-	Cyan;
-	White;
-	BrightBlack;
-	BrightRed;
-	BrightGreen;
-	BrightYellow;
-	BrightBlue;
-	BrightMagenta;
-	BrightCyan;
-	BrightWhite;
-	RGB( r:Int, g:Int, b:Int );
-	Transparent;
-}
-
-typedef Cell = {
-	var code:Int;
-	var color:Color;
-	var background:Color;
 }
 
 class Ansix {
