@@ -1,7 +1,6 @@
 package asciix;
 
 import haxe.ds.Vector;
-import haxe.io.BytesInput;
 import asciix.Color;
 
 enum Parameter {
@@ -113,25 +112,14 @@ class Ansix {
 				( cell.color == color ? "" : getColorFormat( cell.color )) +
 				( cell.background == background ? "" : getBackgroundFormat( cell.background )) +
 				String.fromCharCode( cell.code );
-			if( compareColors( cell.color, color )) color = cell.color;
-			if( compareColors( cell.background, background )) background = cell.background;
+			if( Asciix.compareColors( cell.color, color )) color = cell.color;
+			if( Asciix.compareColors( cell.background, background )) background = cell.background;
 			if( i % width == width - 1 ) sv[i] += "\n";
 		}
 		return sv.join( "" );
 	}
 
-	public static function compareColors( c1:Color, c2:Color ) {
-		switch c1 {
-			case RGB( r1, g1, b1 ):
-				switch c2 {
-					case RGB( r2, g2, b2 ): return r1 == r2 && g1 == g2 && b1 == b2;
-					default: return false;
-				}
-			default: return c1 == c2;
-		}
-	}
-
-	static function getColor( c:Color ) {
+	public static function getColor( c:Color ) {
 		return switch c {
 			case Transparent: throw "Error: in getColor: Transparent should be handeled in getColorFormat()";
 			case Default: throw "Error: in getColor: Default should be handeled in getColorFormat()";
@@ -155,7 +143,7 @@ class Ansix {
 		}
 	}
 
-	static function getBackground( c:Color ) {
+	public static function getBackground( c:Color ) {
 		return switch c {
 			case Transparent: throw "Error: in getColor: Transparent should be handeled in getBackgroundFormat()";
 			case Default: throw "Error: in getBackground: Default should be handeled in getBackgroundFormat()";
@@ -179,26 +167,5 @@ class Ansix {
 		}
 	}
 
-	/**
-	 * returns cell data as string
-	 * @param cell:Cell
-	 */
-	public static function cellToString( cell:Cell ) {
-		return 'code: "${String.fromCharCode( cell.code )}", color: ${colorToString( cell.color )}, background: ${colorToString( cell.background )}';
-	}
-
-	/**
-	 * returns color data as string
-	 * @param c:Color
-	 */
-	public static function colorToString( c:Color ) {
-		return switch c {
-			case Transparent:		'Transparent';
-			case Default: 			'Default';
-			case RGB( r, g, b ): 	'RGB(${r},${g},${b})';
-			default: 				'${getColor( c )}';
-
-		}
-	}
 }
 
