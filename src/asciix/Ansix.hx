@@ -1,4 +1,4 @@
-package xa3;
+package asciix;
 
 import haxe.ds.Vector;
 import haxe.io.BytesInput;
