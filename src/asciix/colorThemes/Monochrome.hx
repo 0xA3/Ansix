@@ -14,7 +14,7 @@ class Monochrome {
 		Magenta => 			[192,192,192],
 		Cyan => 			[192,192,192],
 		White => 			[192,192,192],
-		BrightBlack => 		[192,192,192],
+		BrightBlack => 		[0, 0, 0],
 		BrightRed => 		[192,192,192],
 		BrightGreen => 		[192,192,192],
 		BrightYellow => 	[192,192,192],
