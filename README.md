@@ -1,2 +1,2 @@
-# ansix
-ANSI Text formater for the Terminal
+# Asciix
+ASCII and ANSI Text output in html and terminal
